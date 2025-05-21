@@ -9,6 +9,9 @@ type divideError struct {
 }
 
 // ?
+func (d divideError) Error() string{
+	return fmt.Sprintf("can not divide %v by zero",d.dividend)
+}
 
 // don't edit below this line
 
