@@ -6,6 +6,25 @@ import (
 
 func printPrimes(max int) {
 	// ?
+	for n:=2;n<=max;n++{
+		if n==2{
+			fmt.Printf("n is prime\n")
+
+		} 
+		if n%2==0{
+			continue
+		}
+		isPrime := true
+		for i := 3; i*i <= n; i++ {
+			if n%i == 0 {
+				isPrime = false
+				break
+			}
+		}
+		if isPrime {
+			fmt.Println(n)
+		}
+	}
 }
 
 // don't edit below this line
