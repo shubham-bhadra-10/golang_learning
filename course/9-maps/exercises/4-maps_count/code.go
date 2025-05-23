@@ -8,6 +8,15 @@ import (
 
 func getCounts(userIDs []string) map[string]int {
 	// ?
+	m:=map[string]int{}
+	for _,id:=range userIDs{
+		_,ok:=m[id]
+		if !ok{
+			m[id]=0
+		}
+		m[id]++
+	}
+	return m
 }
 
 // don't edit below this line
