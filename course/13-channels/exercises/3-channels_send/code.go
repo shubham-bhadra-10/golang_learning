@@ -7,6 +7,9 @@ import (
 
 func waitForDbs(numDBs int, dbChan chan struct{}) {
 	// ?
+	for i := 0; i < numDBs; i++ {
+		<-dbChan
+	}
 }
 
 // don't touch below this line
