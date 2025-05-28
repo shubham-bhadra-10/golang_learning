@@ -34,6 +34,11 @@ func main() {
 			MaxAge: 300,
 		},
 	))
+    // v1Router is a router that is used to handle the v1 of the API
+	v1Router := chi.NewRouter()
+	v1Router.Get("/healthz",readinessHandler)
+	v1Router.Get("/err",readinessErrorHandler)
+	router.Mount("/v1", v1Router)
 
 	// srv is a server that is used to start the server
 	srv := &http.Server{
