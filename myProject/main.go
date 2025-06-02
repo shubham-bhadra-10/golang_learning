@@ -6,12 +6,13 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
-	"github.com/shubham-bhadra-10/golang_learning/myProject/internal/database"
 	_ "github.com/lib/pq"
+	"github.com/shubham-bhadra-10/golang_learning/myProject/internal/database"
 )
 
 type apiConfig struct {
@@ -39,6 +40,7 @@ func main() {
 	apiCfg := apiConfig{
 		DB: database.New(conn),
 	}
+	go startScraping(apiCfg.DB, 10, time.Minute)
 
 	router := chi.NewRouter()
 	// chi is a web framework that is used to create a router
@@ -66,6 +68,7 @@ func main() {
 	v1Router.Post("/feed_follows", apiCfg.middlewareAuth(apiCfg.handlerCreateFeedFollow))
 	v1Router.Get("/feed_follows", apiCfg.middlewareAuth(apiCfg.handlerGetFeedFollows))
 	v1Router.Delete("/feed_follows/{feedFollowID}", apiCfg.middlewareAuth(apiCfg.handlerDeleteFeedFollow))
+	v1Router.Get("/posts", apiCfg.middlewareAuth(apiCfg.handlerGetPostsForUser))
 	router.Mount("/v1", v1Router)
 
 
